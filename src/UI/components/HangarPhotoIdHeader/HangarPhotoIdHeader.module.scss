@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  // justify-content: space-between;
+  text-align: center;
+  justify-content: flex-end;
+}
+
+.title {
+  width: 50%;
+}
+.title :first-child {
+  color: #777777;
+}
+.imageHolder {
+  width: 25%;
+}
+
+.siteCardWrapper {
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  border-top: none;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.13);
+  padding: 20px;
+  margin: 20px;
+}
+
+mark,
+.mark {
+  background-color: #333333 !important;
+  padding: 2px 6px;
+  color: #fff;
+  border-radius: 2px;
+}

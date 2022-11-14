@@ -1,0 +1,56 @@
+@import "../../../UI/styles/buttonDefault.module.scss";
+@import "../../../UI/styles/container.module.scss";
+@import "../../../UI/styles/include.module.scss";
+
+.icon {
+  margin-right: 10px;
+  font-size: 18px;
+}
+.btn {
+  display: flex;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  justify-content: left;
+  align-items: center;
+}
+.btnCommon {
+  text-decoration: none !important;
+  margin: 5px 2.5px;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 7px 13px;
+  font-family: "Proxima Nova", Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+.backBtn {
+  color: #455a64;
+  border: 1px solid #0097a7;
+}
+
+.backBtn:hover {
+  color: #455a64 !important;
+  border-color: rgba(15, 44, 91, 0.5);
+  background-color: rgba(15, 44, 91, 0.5);
+}
+.saveBtn {
+  color: #388e3c;
+  border: 1px solid #388e3c;
+}
+.saveBtn:hover {
+  color: #388e3c !important;
+  border-color: rgba(15, 44, 91, 0.5);
+  background-color: rgba(15, 44, 91, 0.5);
+}
+.submitBtn {
+  color: #1976d2;
+  border: 1px solid #1976d2;
+}
+.submitBtn:hover {
+  color: #1976d2 !important;
+  background-color: rgba(15, 44, 91, 0.5);
+  border-color: rgba(15, 44, 91, 0.5);
+}

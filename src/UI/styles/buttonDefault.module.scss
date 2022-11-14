@@ -1,0 +1,35 @@
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.button {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  height: 50px;
+  background-color: #fff;
+  transition: all 0.2s;
+  color: #777;
+  border: none;
+  &:hover {
+    color: #000000;
+    text-decoration: none;
+  }
+
+  &:disabled {
+    border-color: #9b9b9b;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: #fff;
+    }
+  }
+
+  &Sm {
+    height: 36px;
+    font-size: 12px;
+    padding: 0 12px;
+  }
+}

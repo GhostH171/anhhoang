@@ -1,0 +1,16 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "version": "1.15.2",
+    "libraryName": "siaec-spfx-wsfd-hangarpass-uat",
+    "libraryId": "19cf17d4-23fd-4e16-a9ee-98bc712e1ea8",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "siaec-spfx-wsfd-hangarpass-uat",
+    "solutionShortDescription": "siaec-spfx-wsfd-hangarpass-uat description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}

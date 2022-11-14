@@ -1,0 +1,43 @@
+@import "../../../UI/styles/buttonDefault.module.scss";
+@import "../../../UI/styles/container.module.scss";
+@import "../../../UI/styles/include.module.scss";
+
+.topHeader {
+  width: 100%;
+  height: 4vh;
+  border: 1px solid #ddd;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  padding: 9px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.bottomHeader {
+  width: 100%;
+  height: 6vh;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.icon {
+  font-size: 18px;
+}
+.iconApproved {
+  font-size: 18px;
+  color: green;
+}
+.iconDraft {
+  font-size: 18px;
+  color: #1976d2 !important;
+}
+.iconPending {
+  font-size: 18px;
+  color: #1976d2;
+}
+.textMute {
+  color: #999999;
+}

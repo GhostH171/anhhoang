@@ -1,0 +1,77 @@
+.collapseWrapper {
+  width: 100%;
+  display: inline-block;
+  font-weight: bold;
+}
+.iconDisplay {
+  display: inline-block;
+  width: 20px;
+}
+.iconForTitle {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: bold;
+}
+.iconInfo {
+  margin-bottom: 10px;
+}
+.datepicker {
+  width: 100%;
+}
+.formItem2 {
+  display: inline-block;
+  width: calc(50% - 8px);
+}
+.formItemForNric {
+  display: inline-block;
+  width: calc(50% - 8px);
+  margin: 0 0 5px 14px;
+}
+.formItemForNricNumber {
+  display: inline-block;
+  width: calc(50% - 8px);
+  margin: 0 0 0 14px;
+}
+.middleContentColor {
+  background-color: #e0f7fa;
+  border-color: #00bcd4;
+  color: #00838f;
+}
+.middleContentText {
+  margin-left: 5px;
+  color: #00838f;
+}
+.briefDetail {
+  display: inline-block;
+  width: 70%;
+  margin: 0 0 0 14px;
+}
+.question {
+  display: inline-block;
+  width: 100px;
+  margin-left: 20px;
+}
+.uploadFile {
+  margin-left: 22px;
+  color: #333333;
+}
+.uploadFileText {
+  color: #333333;
+  margin-right: 10px;
+}
+.briefDetailWithIconInfo {
+  display: inline-block;
+  width: 100px;
+}
+.sponsor {
+  margin-left: 10px;
+}
+.sponsorInput {
+  margin-right: 20px;
+}
+.cardType {
+  margin-left: 15px;
+}
+.checkbox {
+  margin-bottom: 20px;
+}

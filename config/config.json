@@ -1,0 +1,19 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "siahangarpassver-1-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/siahangarpassver1/Siahangarpassver1WebPart.js",
+          "manifest": "./src/webparts/siahangarpassver1/Siahangarpassver1WebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "Siahangarpassver1WebPartStrings": "lib/webparts/siahangarpassver1/loc/{locale}.js",
+    "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js"
+  }
+}

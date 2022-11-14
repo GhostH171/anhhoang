@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "siaec-spfx-wsfd-hangarpass-uat-client-side-solution",
+    "id": "19cf17d4-23fd-4e16-a9ee-98bc712e1ea8",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.15.2"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "siaec-spfx-wsfd-hangarpass-uat description"
+      },
+      "longDescription": {
+        "default": "siaec-spfx-wsfd-hangarpass-uat description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "siaec-spfx-wsfd-hangarpass-uat Feature",
+        "description": "The feature that activates elements of the siaec-spfx-wsfd-hangarpass-uat solution.",
+        "id": "a1057053-9744-4fb8-a8e4-532a4a0edc0f",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/siaec-spfx-wsfd-hangarpass-uat.sppkg"
+  }
+}
