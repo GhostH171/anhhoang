@@ -1,15 +1,17 @@
 import * as React from "react";
+import { useEffect } from "react";
 import styles from "./Body.module.scss";
 import { SearchBox } from "@fluentui/react/lib/SearchBox";
 import { IBodyProps } from "./IBodyProps";
-// import { IBodySates } from "./IBodyStates";
+import { IBodySates } from "./IBodyStates";
 import { Table, TableProps } from "antd";
 import type {
   ColumnsType,
-  // FilterValue,
+  FilterValue,
   SorterResult,
 } from "antd/es/table/interface";
 import "antd/dist/antd.css";
+import { getInformationList } from "../../../api";
 
 interface DataType {
   passNumber: string;
@@ -23,9 +25,9 @@ const Body: React.FunctionComponent<IBodyProps> = () => {
   const [sortedInfo, setSortedInfo] = React.useState<SorterResult<DataType>>(
     {}
   );
-  // const [filteredInfo, setFilteredInfo] = React.useState<
-  //   Record<string, FilterValue | null>
-  // >({});
+  const [filteredInfo, setFilteredInfo] = React.useState<
+    Record<string, FilterValue | null>
+  >({});
 
   const handleChange: TableProps<DataType>["onChange"] = (
     pagination,
@@ -33,7 +35,7 @@ const Body: React.FunctionComponent<IBodyProps> = () => {
     sorter
   ) => {
     console.log("Various parameters", pagination, filters, sorter);
-    // setFilteredInfo(filters);
+    setFilteredInfo(filters);
     setSortedInfo(sorter as SorterResult<DataType>);
   };
 
@@ -66,7 +68,113 @@ const Body: React.FunctionComponent<IBodyProps> = () => {
       appPeriod: "2022-2023",
       status: "Approved",
     },
+    {
+      passNumber: "AP012233",
+      passType: "General",
+      applicantName: "pkHoang",
+      appPeriod: "2022-2023",
+      status: "Rejected",
+    },
+    {
+      passNumber: "HP002213",
+      passType: "General",
+      applicantName: "pkHoang",
+      appPeriod: "2022-2023",
+      status: "Approved",
+    },
+    {
+      passNumber: "BP002220",
+      passType: "General",
+      applicantName: "pkHoang",
+      appPeriod: "2022-2023",
+      status: "Rejected",
+    },
+    {
+      passNumber: "HP002234",
+      passType: "General",
+      applicantName: "pkHoang",
+      appPeriod: "2022-2023",
+      status: "Approved",
+    },
+    {
+      passNumber: "AP012233",
+      passType: "General",
+      applicantName: "pkHoang",
+      appPeriod: "2022-2023",
+      status: "Rejected",
+    },
+    {
+      passNumber: "HP002213",
+      passType: "General",
+      applicantName: "pkHoang",
+      appPeriod: "2022-2023",
+      status: "Approved",
+    },
+    {
+      passNumber: "BP002220",
+      passType: "General",
+      applicantName: "pkHoang",
+      appPeriod: "2022-2023",
+      status: "Rejected",
+    },
+    {
+      passNumber: "HP002234",
+      passType: "General",
+      applicantName: "pkHoang",
+      appPeriod: "2022-2023",
+      status: "Approved",
+    },
+    {
+      passNumber: "AP012233",
+      passType: "General",
+      applicantName: "pkHoang",
+      appPeriod: "2022-2023",
+      status: "Rejected",
+    },
+    {
+      passNumber: "HP002213",
+      passType: "General",
+      applicantName: "pkHoang",
+      appPeriod: "2022-2023",
+      status: "Approved",
+    },
+    {
+      passNumber: "BP002220",
+      passType: "General",
+      applicantName: "pkHoang",
+      appPeriod: "2022-2023",
+      status: "Rejected",
+    },
+    {
+      passNumber: "HP002234",
+      passType: "General",
+      applicantName: "pkHoang",
+      appPeriod: "2022-2023",
+      status: "Approved",
+    },
+    {
+      passNumber: "AP012233",
+      passType: "General",
+      applicantName: "pkHoang",
+      appPeriod: "2022-2023",
+      status: "Rejected",
+    },
   ];
+  const fetchData = async () => {
+    try {
+      const response = await getInformationList();
+      console.log("--------response", response);
+      if (response) {
+        console.log(response);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const columns: ColumnsType<DataType> = [
     {
@@ -127,7 +235,7 @@ const Body: React.FunctionComponent<IBodyProps> = () => {
       ellipsis: true,
       filterMode: "tree",
       filterSearch: true,
-      // onFilter: (value: string, record) => record.status.includes(value),
+      onFilter: (value: string, record) => record.status.includes(value),
     },
   ];
 

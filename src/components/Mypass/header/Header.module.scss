@@ -20,7 +20,7 @@
   text-decoration: none;
 }
 .icon {
-  margin: 0 10px;
+  margin-left: 15px;
   font-size: 18px;
 }
 .iconRight {
@@ -34,4 +34,9 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+.link {
+  &:hover {
+    text-decoration: none;
+  }
 }

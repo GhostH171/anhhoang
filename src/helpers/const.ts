@@ -9,3 +9,12 @@ export const SITE_URL = {
 export enum FOLDER_NAME {
   imageTempNew = "Images/HangarPass/TemporaryNew",
 }
+
+export enum GROUP_NAME {
+  hmd = "HMD Approvers",
+  sponsor = "HangarPass Sponsors",
+}
+
+export enum LIST_NAME {
+  photoIdTemp = "HangarPassPhotoIdTemporary",
+}

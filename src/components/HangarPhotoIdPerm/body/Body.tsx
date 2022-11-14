@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import styles from "./Body.module.scss";
 import { SearchBox } from "@fluentui/react/lib/SearchBox";
@@ -6,7 +5,7 @@ import { IBodyProps } from "./IBodyProps";
 import { Table, TableProps } from "antd";
 import type {
   ColumnsType,
-  // FilterValue,
+  FilterValue,
   SorterResult,
 } from "antd/es/table/interface";
 import "antd/dist/antd.css";
@@ -23,9 +22,9 @@ const Body: React.FunctionComponent<IBodyProps> = () => {
   const [sortedInfo, setSortedInfo] = React.useState<SorterResult<DataType>>(
     {}
   );
-  // const [filteredInfo, setFilteredInfo] = React.useState<
-  //   Record<string, FilterValue | null>
-  // >({});
+  const [filteredInfo, setFilteredInfo] = React.useState<
+    Record<string, FilterValue | null>
+  >({});
 
   const handleChange: TableProps<DataType>["onChange"] = (
     pagination,
@@ -33,7 +32,7 @@ const Body: React.FunctionComponent<IBodyProps> = () => {
     sorter
   ) => {
     console.log("Various parameters", pagination, filters, sorter);
-    // setFilteredInfo(filters);
+    setFilteredInfo(filters);
     setSortedInfo(sorter as SorterResult<DataType>);
   };
 

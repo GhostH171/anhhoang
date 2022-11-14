@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import { useState } from "react";
 import styles from "./Body.module.scss";
@@ -19,7 +18,7 @@ import {
 } from "antd";
 import { Icon } from "office-ui-fabric-react";
 import TextArea from "antd/lib/input/TextArea";
-// import { Label } from "@fluentui/react";
+import { Label } from "@fluentui/react";
 import { UploadOutlined } from "@ant-design/icons";
 
 const { Panel } = Collapse;
@@ -63,16 +62,14 @@ const props: UploadProps = {
       console.log(info.file, info.fileList);
     }
     if (info.file.status === "done") {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       message.success(`${info.file.name} file uploaded successfully`);
     } else if (info.file.status === "error") {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       message.error(`${info.file.name} file upload failed.`);
     }
   },
 };
 
-const handleChange = (value: string): void => {
+const handleChange = (value: string) => {
   console.log(`selected ${value}`);
 };
 
@@ -85,24 +82,24 @@ const HangarPhotoIdTempFormBody: React.FC = () => {
   const [value2, setValue2] = useState("male");
   const [value3, setValue3] = useState("none");
 
-  const onChange1 = ({ target: { value } }: RadioChangeEvent): void => {
+  const onChange1 = ({ target: { value } }: RadioChangeEvent) => {
     console.log("radio1 checked", value);
     setValue1(value);
   };
 
-  const onChange2 = ({ target: { value } }: RadioChangeEvent): void => {
+  const onChange2 = ({ target: { value } }: RadioChangeEvent) => {
     console.log("radio1 checked", value);
     setValue2(value);
   };
 
-  const onChange3 = ({ target: { value } }: RadioChangeEvent): void => {
+  const onChange3 = ({ target: { value } }: RadioChangeEvent) => {
     console.log("radio1 checked", value);
     setValue3(value);
   };
 
   const [form] = Form.useForm();
 
-  const onFinish = (values: any): void => {
+  const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
   };
   return (

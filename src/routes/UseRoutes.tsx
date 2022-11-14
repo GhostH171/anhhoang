@@ -6,7 +6,7 @@ import HangarPhotoIdPerm from "../components/HangarPhotoIdPerm/HangarPhotoIdPerm
 import HangarPassPhotoId from "../components/HangarPassPhotoID/HangarPassPhotoId";
 import HangarPhotoIdTempForm from "../components/HangarPhotoIdTempForm/HangarPhotoIdTempForm";
 
-const UseRoutes = (): JSX.Element =>
+const UseRoutes = () =>
   useRoutes([
     {
       path: "/",

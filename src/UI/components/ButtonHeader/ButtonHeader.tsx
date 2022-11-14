@@ -6,7 +6,7 @@ import { Icon } from "@fluentui/react/lib/Icon";
 const ButtonHeader: React.FunctionComponent<IButtonHeaderProps> = (props) => {
   return (
     <div className={`${styles.btn}`}>
-      <a href={`${props.link}`}>
+      <a href={`${props.link}`} className={`${styles.link}`}>
         <button className={`${styles.button}`}>
           <Icon iconName="PageAdd" className={`${styles.icon}`} />
           <span className={`${styles.text}`}>{props.title}</span>

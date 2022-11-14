@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import styles from "./Body.module.scss";
 import { SearchBox } from "@fluentui/react/lib/SearchBox";
@@ -6,7 +5,7 @@ import { IBodyProps } from "./IBodyProps";
 import { Table, TableProps } from "antd";
 import type {
   ColumnsType,
-  // FilterValue,
+  FilterValue,
   SorterResult,
 } from "antd/es/table/interface";
 import "antd/dist/antd.css";
@@ -25,10 +24,9 @@ const Body: React.FunctionComponent<IBodyProps> = () => {
   const [sortedInfo, setSortedInfo] = React.useState<SorterResult<DataType>>(
     {}
   );
-
-  // const [filteredInfo, setFilteredInfo] = React.useState<
-  //   Record<string, FilterValue | null>
-  // >({});
+  const [filteredInfo, setFilteredInfo] = React.useState<
+    Record<string, FilterValue | null>
+  >({});
 
   const handleChange: TableProps<DataType>["onChange"] = (
     pagination,
@@ -36,7 +34,7 @@ const Body: React.FunctionComponent<IBodyProps> = () => {
     sorter
   ) => {
     console.log("Various parameters", pagination, filters, sorter);
-    // setFilteredInfo(filters);
+    setFilteredInfo(filters);
     setSortedInfo(sorter as SorterResult<DataType>);
   };
 
@@ -75,13 +73,11 @@ const Body: React.FunctionComponent<IBodyProps> = () => {
     },
   ];
   const functionUrl = "api://358331ba-feca-4cbf-8e8e-f3bb3400661d";
-  
-  function getPhotoId(): void {
+  function getPhotoId() {
     try {
       this.props.context.aadHttpClientFactory
         .getClient(functionUrl)
         .then((client: AadHttpClient): void => {
-          // eslint-disable-next-line @typescript-eslint/no-floating-promises
           client
             .get(
               `https://siaec-hangarpass-uat.azurewebsites.net/api/photoid?code=cbTEFkeZGjkOwTFfXeaJtxqUFdT2GWcggTx0xuSvpZGJAzFuTEuwng==`,
@@ -110,7 +106,7 @@ const Body: React.FunctionComponent<IBodyProps> = () => {
       sorter: (a, b) => a.passNumber.localeCompare(b.passNumber),
       sortOrder:
         sortedInfo.columnKey === "passNumber" ? sortedInfo.order : null,
-      // onFilter: (value: string, record) => record.passNumber.startsWith(value),
+      onFilter: (value: string, record) => record.passNumber.startsWith(value),
       ellipsis: true,
     },
     {
@@ -160,11 +156,11 @@ const Body: React.FunctionComponent<IBodyProps> = () => {
       filters: [
         {
           text: "Approved",
-          value: "approved",
+          value: "Approved",
         },
         {
           text: "Rejected",
-          value: "rejected",
+          value: "Rejected",
         },
       ],
       key: "status",

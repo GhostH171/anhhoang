@@ -2,7 +2,7 @@ import * as React from "react";
 import styles from "./Header.module.scss";
 import { Icon } from "@fluentui/react/lib/Icon";
 import { IHeaderProps } from "./IHeaderProps";
-import { Dropdown, Menu, Space } from "antd";
+import { Button, Dropdown, Menu, MenuProps, Space } from "antd";
 
 const hangarPhotoIdMenu = (
   <Menu
@@ -114,7 +114,7 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
   return (
     <div className={`${styles.header}`}>
       <Dropdown overlay={menu} className={styles.headerBtn}>
-        <a onClick={(e) => e.preventDefault()}>
+        <a onClick={(e) => e.preventDefault()} className={`${styles.link}`}>
           <Space className={styles.headerText}>
             <Icon iconName="PageAdd" className={`${styles.icon}`} />
             Create new Pass

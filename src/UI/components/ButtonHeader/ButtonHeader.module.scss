@@ -15,7 +15,15 @@
   border-radius: 3px;
 }
 
+.button {
+  margin-left: 8px;
+}
+
 .text {
-  text-decoration: none !important;
   font-family: "Proxima Nova", Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+.link {
+  &:hover {
+    text-decoration: none;
+  }
 }

@@ -16,27 +16,4 @@ const getInformationList = async () => {
     }
 }
 
-const submitInformation = async (data) => {
-    try {
-        const detail = {
-            information: data
-        }
-
-        const params = {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Access-Control-Allow-Origin': "*"
-            },
-            body:  JSON.stringify(detail)
-        }
-
-        const response = await fetch(`${url}info`, params );
-
-        return response
-    } catch (err) {
-        console.log(err);
-    }
-};
-
-export { getInformationList, submitInformation };
+export { getInformationList };
