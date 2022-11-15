@@ -34,11 +34,10 @@ export default class FileServices {
     }
   }
 
-  public async createfile(folderUrl: string, file: any) {
-    const fileNamePath = encodeURI(file.name);
-    await this.sp.web
-      .getFolderByServerRelativePath(folderUrl)
-      .files.addUsingPath(fileNamePath, file);
+  public async getFile(fileName: string) {
+    const file = this.sp.web.getFileByUrl(fileName);
+    console.log(file);
+    const fileContent = await (await file).getItem();
+    console.log("fileContent", fileContent);
   }
-
 }

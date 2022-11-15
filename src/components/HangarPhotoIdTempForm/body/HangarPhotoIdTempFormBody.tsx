@@ -3,27 +3,41 @@ import * as React from "react";
 import { useState, useRef, useContext, useEffect } from "react";
 import styles from "./HangarPhotoIdTempFormBody.module.scss";
 import {
-  UploadProps, RadioChangeEvent, Divider, Space, InputRef,
-  Button, Checkbox, Form, Input, Select, Tooltip, Typography,
-  Upload, message, DatePicker, Radio, Collapse,
+  UploadProps,
+  RadioChangeEvent,
+  Divider,
+  Space,
+  InputRef,
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  Select,
+  Tooltip,
+  Typography,
+  Upload,
+  message,
+  DatePicker,
+  Radio,
+  Collapse,
 } from "antd";
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from "@ant-design/icons";
 import { Icon } from "office-ui-fabric-react";
-// import { Label } from "@fluentui/react";
+import { Label } from "@fluentui/react";
 import TextArea from "antd/lib/input/TextArea";
 import { UploadOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import CustomContext from "../../../context/UseContext";
 import { PeoplePicker } from "@pnp/spfx-controls-react/lib/PeoplePicker";
 import GroupServices from "../../../services/GroupServices";
-import { GROUP_NAME, LIST_NAME } from "../../../helpers/const";
-// import FileServices from "../../../services/FileDemoServices";
-// import { UploadChangeParam, UploadFile } from "antd/lib/upload";
-// import { FilePicker } from "@pnp/spfx-controls-react/lib/FilePicker";
-// import ListServices from "../../../services/ListServices";
+import { GROUP_NAME } from "../../../helpers/const";
+import FileServices from "../../../services/FileDemoServices";
+import type { RcFile, UploadFile } from "antd/es/upload/interface";
+import { FilePicker } from "@pnp/spfx-controls-react/lib/FilePicker";
+import type { UploadChangeParam } from "antd/es/upload";
 
-import Nationality from '../../../assets/nationality.json';
-import Country from '../../../assets/country.json';
+import Nationality from "../../../assets/nationality.json";
+import Country from "../../../assets/country.json";
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -56,47 +70,52 @@ const formItemLayout = {
   },
 };
 
-const props: UploadProps = {
-  name: "file",
-  action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-  headers: {
-    authorization: "authorization-text",
-  },
-  onChange(info) {
-    if (info.file.status !== "uploading") {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === "done") {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      message.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === "error") {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-};
-
 let index = 0;
 
 interface IProps {
   onFinish: (values: object) => void;
-  form: any
+  form: any;
 }
 
-const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
-  onFinish,
-  form
-}) => {
+const HangarPhotoIdTempFormBody: React.FC<IProps> = ({ onFinish, form }) => {
   const { context } = useContext(CustomContext);
   const groupServices = new GroupServices(context);
   const [cardType, setCardType] = useState("staff");
   const [gender, setGender] = useState("male");
   const [foreigner, setForeigner] = useState("none");
+  const [foreignNa, setForeignNa] = useState("none");
   const [BMDTitle, setBMDTitle] = useState([]);
+  const [attachmentsState, setattachmentsState] = useState<File[]>([]);
 
-  const [items, setItems] = useState(['Chinese', 'Malay', 'Indian', 'Eurasian']);
-  const [name, setName] = useState('');
+  const fileServices = new FileServices(context);
+
+  const [items, setItems] = useState([
+    "Chinese",
+    "Malay",
+    "Indian",
+    "Eurasian",
+  ]);
+  const [name, setName] = useState("");
   const inputRef = useRef<InputRef>(null);
+
+  const _handleSubmit = () => {
+    attachmentsState.forEach((file) => {
+      fileServices.create(
+        // Error here, không upload được lên đường dẫn này
+        "sites%2Fuat%2Fhangar_pass%2FAll%20Attachments%2FTemporaryNew",
+        file
+      );
+    });
+  };
+  useEffect(() => {
+    _handleSubmit();
+  }, [attachmentsState]);
+
+  const _getFileUrl = (info: UploadChangeParam<UploadFile>) => {
+    fileServices.getFile(
+      "/sites/uat/hangar_pass/Images1/HangarPass/TemporaryNew/1650044414254product_1632992196.jpg"
+    );
+  };
 
   //Fetch Group
   const _fetchGroupBMD = () => {
@@ -107,12 +126,12 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
       setBMDTitle(BMDName);
     });
   };
-  
-    useEffect(() => {
-      _fetchGroupBMD();
-    }, []);
 
-   // add item in race
+  useEffect(() => {
+    _fetchGroupBMD();
+  }, []);
+
+  // add item in race
   const onNameChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setName(event.target.value);
   };
@@ -121,7 +140,7 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
   const addItem = (e: React.MouseEvent<HTMLAnchorElement>): void => {
     e.preventDefault();
     setItems([...items, name || `New item ${index++}`]);
-    setName('');
+    setName("");
     setTimeout(() => {
       inputRef.current?.focus();
     }, 0);
@@ -143,16 +162,18 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
     if (foreigner === "fin" || foreigner === "passport") {
       return (
         <Form.Item>
-          <table className="foreignerTable" style={{ width: '100%'}}>
+          <table className="foreignerTable" style={{ width: "100%" }}>
             <tr className={`${styles.tableHeader}`}>
               <th className={`${styles.tbHeaderItems}`}>
-                <span style={{ textTransform: 'capitalize'}}>{foreigner}</span> <span className={`${styles.star}`}>*</span>
+                <span style={{ textTransform: "capitalize" }}>{foreigner}</span>{" "}
+                <span className={`${styles.star}`}>*</span>
               </th>
               <th className={`${styles.tbHeaderItems}`}>
                 Issue Date<span className={`${styles.star}`}>*</span> DD/MM/YYYY
               </th>
               <th className={`${styles.tbHeaderItems}`}>
-                Expiry Date<span className={`${styles.star}`}>*</span> DD/MM/YYYY
+                Expiry Date<span className={`${styles.star}`}>*</span>{" "}
+                DD/MM/YYYY
               </th>
             </tr>
             <tr>
@@ -166,34 +187,39 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
                     },
                   ]}
                 >
-                  <Input className={styles.finInput} placeholder={`${foreigner === 'fin' ? 'Fin' : 'Passport'} No`} />
+                  <Input
+                    className={styles.finInput}
+                    placeholder={`${
+                      foreigner === "fin" ? "Fin" : "Passport"
+                    } No`}
+                  />
                 </Form.Item>
               </td>
               <td className="foreignerTable-td">
                 <Form.Item
-                    name={foreigner + 'issueDate'}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input this field!",
-                      },
-                    ]}
-                  >
-                     <DatePicker className={styles.datepicker} />
-                  </Form.Item>
+                  name={foreigner + "issueDate"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input this field!",
+                    },
+                  ]}
+                >
+                  <DatePicker className={styles.datepicker} />
+                </Form.Item>
               </td>
               <td className="foreignerTable-td">
                 <Form.Item
-                    name={foreigner + 'ExpiryDate'}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input this field!",
-                      },
-                    ]}
-                  >
-                     <DatePicker className={styles.datepicker} />
-                  </Form.Item>
+                  name={foreigner + "ExpiryDate"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input this field!",
+                    },
+                  ]}
+                >
+                  <DatePicker className={styles.datepicker} />
+                </Form.Item>
               </td>
             </tr>
           </table>
@@ -201,7 +227,6 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
       );
     }
   };
-
 
   return (
     <div>
@@ -221,7 +246,11 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
         <Collapse bordered={false} defaultActiveKey={["1", "2", "4"]}>
           <Panel
             className={`${styles.collapseWrapper}`}
-            header={<><Icon iconName="ContextMenu"/> CARD TYPE</>}
+            header={
+              <>
+                <Icon iconName="ContextMenu" /> CARD TYPE
+              </>
+            }
             key="1"
           >
             <Form.Item
@@ -296,7 +325,9 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
                 showSearch
                 placeholder="Search your nationality"
                 optionFilterProp="children"
-                filterOption={(input, option) => (option?.label ?? '').includes(input)}
+                filterOption={(input, option) =>
+                  (option?.label ?? "").includes(input)
+                }
                 options={Nationality}
               />
             </Form.Item>
@@ -316,7 +347,9 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
                 showSearch
                 placeholder="Search your country"
                 optionFilterProp="children"
-                filterOption={(input, option) => (option?.label ?? '').includes(input)}
+                filterOption={(input, option) =>
+                  (option?.label ?? "").includes(input)
+                }
                 options={Country}
               />
             </Form.Item>
@@ -331,7 +364,10 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
                 },
               ]}
             >
-              <DatePicker placement="bottomLeft" className={styles.datepicker} />
+              <DatePicker
+                placement="bottomLeft"
+                className={styles.datepicker}
+              />
             </Form.Item>
 
             <Form.Item
@@ -340,7 +376,9 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
             >
               <Form.Item
                 name="nricType"
-                rules={[{ required: true,  message: "Please select your NRIC Type!", }]}
+                rules={[
+                  { required: true, message: "Please select your NRIC Type!" },
+                ]}
                 className={`${styles.formItem2}`}
               >
                 <Select defaultValue="Select NRIC">
@@ -350,7 +388,12 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
               </Form.Item>
               <Form.Item
                 name="nricNumber"
-                rules={[{ required: true, message: "Please select your NRIC Number!", }]}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please select your NRIC Number!",
+                  },
+                ]}
                 className={`${styles.formItemForNricNumber}`}
               >
                 <Input placeholder="NRIC Number" />
@@ -364,24 +407,28 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
             >
               <Select
                 placeholder="Select race"
-                dropdownRender={menu => (
+                dropdownRender={(menu) => (
                   <>
                     {menu}
-                    <Divider style={{ margin: '8px 0' }} />
-                    <Space style={{ padding: '0 8px 4px' }}>
+                    <Divider style={{ margin: "8px 0" }} />
+                    <Space style={{ padding: "0 8px 4px" }}>
                       <Input
                         placeholder="Please enter item"
                         ref={inputRef}
                         value={name}
                         onChange={onNameChange}
                       />
-                      <Button type="text" icon={<PlusOutlined />} onClick={addItem}>
+                      <Button
+                        type="text"
+                        icon={<PlusOutlined />}
+                        onClick={addItem}
+                      >
                         Add item
                       </Button>
                     </Space>
                   </>
                 )}
-                options={items.map(item => ({ label: item, value: item }))}
+                options={items.map((item) => ({ label: item, value: item }))}
               />
             </Form.Item>
 
@@ -415,7 +462,7 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
                 },
               ]}
             >
-              <DatePicker className={styles.datepicker}/>
+              <DatePicker className={styles.datepicker} />
             </Form.Item>
 
             <Form.Item
@@ -471,7 +518,7 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
               <Input placeholder="State Type Of Work" />
             </Form.Item>
 
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: "flex" }}>
               <Form.Item
                 name="numberOfVisit"
                 label="State frequency of visits by applicant on official duties"
@@ -482,10 +529,19 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
                   },
                 ]}
               >
-                <Input style={{width: '100%'}} className={styles.formItem2} placeholder="Frequency Of Visits" />
+                <Input
+                  style={{ width: "100%" }}
+                  className={styles.formItem2}
+                  placeholder="Frequency Of Visits"
+                />
               </Form.Item>
 
-              <Typography style={{ flex: 1}} className={styles.formItemForNric}>days per week</Typography>
+              <Typography
+                style={{ flex: 1 }}
+                className={styles.formItemForNric}
+              >
+                days per week
+              </Typography>
             </div>
 
             <Form.Item
@@ -526,7 +582,7 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
                 rules={[{ required: false }]}
                 className={`${styles.briefDetailWithIconInfo}`}
               >
-                <Select  defaultValue="Select">
+                <Select defaultValue="Select">
                   <Option value="yes">Yes</Option>
                   <Option value="no">No</Option>
                 </Select>
@@ -536,10 +592,7 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
                 rules={[{ required: false }]}
                 className={`${styles.briefDetail}`}
               >
-                <TextArea
-                  placeholder="Brief Details If Yes"
-                  rows={2}
-                />
+                <TextArea placeholder="Brief Details If Yes" rows={2} />
               </Form.Item>
             </Form.Item>
 
@@ -559,10 +612,7 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
                 rules={[{ required: false }]}
                 className={`${styles.briefDetail}`}
               >
-                <TextArea
-                  placeholder="Brief Details If Yes"
-                  rows={2}
-                />
+                <TextArea placeholder="Brief Details If Yes" rows={2} />
               </Form.Item>
             </Form.Item>
 
@@ -582,10 +632,7 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
                 rules={[{ required: false }]}
                 className={`${styles.briefDetail}`}
               >
-                <TextArea
-                  placeholder="Brief Details If Yes"
-                  rows={2}
-                />
+                <TextArea placeholder="Brief Details If Yes" rows={2} />
               </Form.Item>
             </Form.Item>
 
@@ -612,10 +659,41 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
               <Text className={`${styles.uploadFileText}`}>
                 Use the right section to add Attachments
               </Text>
-              <Upload {...props}>
-                <Button icon={<UploadOutlined />}>Choose File</Button>
-              </Upload>
+              <FilePicker
+                required
+                context={context}
+                hideRecentTab
+                hideOneDriveTab
+                hideStockImages
+                hideSiteFilesTab
+                accepts={[".ipg", ".png", ".gif", ".docx", ".pdf"]}
+                buttonLabel={"Select files"}
+                buttonClassName={styles.peoplePickerButton}
+                onSave={async (value) => {
+                  const attachments = [];
+                  for (let v of value) {
+                    attachments.push(await v.downloadFileContent());
+                  }
+                  console.log(attachments);
+                  setattachmentsState(attachments);
+                }}
+              />
             </Form.Item>
+            {(attachmentsState || []).map((file, fIndex) => (
+              <div key={fIndex} className={`${styles.attachment}`}>
+                <Label>{file.name}</Label>
+                <button
+                  type={"button"}
+                  className={`${styles.attachment_delete}`}
+                  onClick={() => {
+                    console.log(attachmentsState);
+                    attachmentsState.splice(fIndex, 1);
+                  }}
+                >
+                  <Icon iconName={"Cancel"} />
+                </button>
+              </div>
+            ))}
           </Panel>
 
           <Panel
@@ -656,9 +734,11 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
                 ]}
               >
                 <Select>
-                  {
-                    BMDTitle.map((item: string, index: number) => <Option key={index} value={item}>{item}</Option> )
-                  }
+                  {BMDTitle.map((item: string, index: number) => (
+                    <Option key={index} value={item}>
+                      {item}
+                    </Option>
+                  ))}
                 </Select>
               </Form.Item>
             </Form.Item>
