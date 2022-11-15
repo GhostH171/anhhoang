@@ -46,15 +46,13 @@ const HangarPhotoIdHeader: React.FC<IHangarPhotoIdHeaderProps> = (props) => {
         <Card title="Note:" bordered={false}>
           <ol>
             <li>
-              Attach a copy of <mark> NRIC or FIN & Passport </mark> when
-              submitting this form. Copies of
-              <mark> Airport Pass & SIA Staff Pass/Term Pass </mark> are
+              Attach a copy of <mark> NRIC or FIN & Passport</mark> when
+              submitting this form. Copies of <mark> Airport Pass & SIA Staff Pass/Term Pass</mark> are
               required.
             </li>
             <li>
               The applicant&apos;s Manager must ensure that the applicant has
-              also
-              <mark> attended the SIAEC Safety Induction </mark> program prior
+              also <mark>attended the SIAEC Safety Induction</mark> program prior
               to entering the hangar. Please check with SIAEC Safety for
               clarification.
             </li>

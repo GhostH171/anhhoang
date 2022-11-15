@@ -93,7 +93,6 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
   const [gender, setGender] = useState("male");
   const [foreigner, setForeigner] = useState("none");
   const [BMDTitle, setBMDTitle] = useState([]);
-  console.log("🚀 ~ file: HangarPhotoIdTempFormBody.tsx ~ line 97 ~ BMDTitle", BMDTitle)
 
   const [items, setItems] = useState(['Chinese', 'Malay', 'Indian', 'Eurasian']);
   const [name, setName] = useState('');
@@ -139,6 +138,70 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
   const onChangeForeigner = ({ target: { value } }: RadioChangeEvent): void => {
     setForeigner(value);
   };
+
+  const onDisTable = () => {
+    if (foreigner === "fin" || foreigner === "passport") {
+      return (
+        <Form.Item>
+          <table className="foreignerTable" style={{ width: '100%'}}>
+            <tr className={`${styles.tableHeader}`}>
+              <th className={`${styles.tbHeaderItems}`}>
+                <span style={{ textTransform: 'capitalize'}}>{foreigner}</span> <span className={`${styles.star}`}>*</span>
+              </th>
+              <th className={`${styles.tbHeaderItems}`}>
+                Issue Date<span className={`${styles.star}`}>*</span> DD/MM/YYYY
+              </th>
+              <th className={`${styles.tbHeaderItems}`}>
+                Expiry Date<span className={`${styles.star}`}>*</span> DD/MM/YYYY
+              </th>
+            </tr>
+            <tr>
+              <td className="foreignerTable-td">
+                <Form.Item
+                  name={foreigner}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input this field!",
+                    },
+                  ]}
+                >
+                  <Input className={styles.finInput} placeholder={`${foreigner === 'fin' ? 'Fin' : 'Passport'} No`} />
+                </Form.Item>
+              </td>
+              <td className="foreignerTable-td">
+                <Form.Item
+                    name={foreigner + 'issueDate'}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input this field!",
+                      },
+                    ]}
+                  >
+                     <DatePicker className={styles.datepicker} />
+                  </Form.Item>
+              </td>
+              <td className="foreignerTable-td">
+                <Form.Item
+                    name={foreigner + 'ExpiryDate'}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input this field!",
+                      },
+                    ]}
+                  >
+                     <DatePicker className={styles.datepicker} />
+                  </Form.Item>
+              </td>
+            </tr>
+          </table>
+        </Form.Item>
+      );
+    }
+  };
+
 
   return (
     <div>
@@ -339,6 +402,8 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
                 value={foreigner}
               />
             </Form.Item>
+
+            {onDisTable()}
 
             <Form.Item
               name="expireDate"

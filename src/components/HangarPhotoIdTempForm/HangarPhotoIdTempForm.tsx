@@ -8,10 +8,14 @@ import ButtonsFooter from "../../UI/components/ButtonsFooter/ButtonsFooter";
 import ViewEditHeader from "../../UI/components/ViewEditHeader/ViewEditHeader";
 import { submitInformation } from "../../api";
 import { Form } from "antd";
+import { useLocation } from 'react-router-dom';
 
 const HangarPhotoIdTempForm: React.FunctionComponent<
   IHangarPhotoIdTempProps
 > = () => {
+  const { pathname } = useLocation();
+  const isTemporary = pathname.split('/')[1] === 'Temporary';
+
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
@@ -31,7 +35,7 @@ const HangarPhotoIdTempForm: React.FunctionComponent<
         detail: values.isQuestion3
        },
       status: 0, 
-      typePhoto: 0
+      typePhoto: isTemporary ? 1 : 0
     }
 
     const result = submitInformation(dataFormat);
@@ -43,19 +47,21 @@ const HangarPhotoIdTempForm: React.FunctionComponent<
 
 
   return (
-    <>
-      <ViewEditHeader />
+    <React.Fragment key={pathname}>
+      {
+        isTemporary && <ViewEditHeader />
+      }
       <div className={`${styles.container}`}>
         <HangarPhotoIdHeader
-          title="Temporary"
+          title={isTemporary ? "Temporary" : "Permanent"}
           diffContent="For persons intending to work in (projects) or visit SIAEC premises for a short period of time (3 months to a year)"
-          formType="Temporary"
+          formType={isTemporary ? "Temporary" : "Permanent"}
         />
         <HangarPhotoIdTempFormBody onFinish={onFinish} form={form} />
       </div>
       <ButtonsFooter />
       <Footer />
-    </>
+    </React.Fragment>
   );
 };
 
