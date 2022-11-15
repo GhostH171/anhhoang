@@ -1,3 +1,52 @@
+@import "../../../UI/styles/attachment.module.scss";
+
+// body {
+//   font-family: "Proxima Nova", Helvetica Neue, Helvetica, Arial, sans-serif;
+// }
+
+// table {
+//   width: 100%;
+//   border: 1px solid #bbb;
+//   border-collapse: collapse;
+// }
+// .tableHeader {
+//   background-color: #00266b;
+//   color: #fff;
+// }
+// .tbHeaderItems {
+//   padding: 8px 20px;
+//   font-weight: normal;
+//   border-right: 1px solid #fff;
+// }
+// td {
+//   border-left: 1px solid #bbb;
+//   padding: 10px 20px;
+// }
+// .star {
+//   color: red;
+// }
+// .finInput {
+//   border: none;
+//   border-bottom: 1px solid #bbb;
+//   &:hover {
+//     border-bottom: 2px solid #f99f1c;
+//   }
+// }
+// .statePeriod {
+//   display: flex;
+//   justify-content: space-between;
+//   right: 0;
+// }
+// .peoplePickerButton {
+//   padding-top: 5px;
+//   padding-bottom: 5px;
+//   word-break: break-word;
+//   text-align: left;
+//   height: auto;
+//   min-height: 32px;
+//   background-color: #bbb;
+// }
+
 .collapseWrapper {
   width: 100%;
   display: inline-block;

@@ -1,5 +1,6 @@
 import * as React from "react";
 import styles from "./Header.module.scss";
+import { Link } from "react-router-dom";
 import { Icon } from "@fluentui/react/lib/Icon";
 import { IHeaderProps } from "./IHeaderProps";
 import { Dropdown, Menu, Space } from "antd";
@@ -9,11 +10,11 @@ const hangarPhotoIdMenu = (
     items={[
       {
         key: 1,
-        label: <a href="#">Permanent</a>,
+        label: <Link to="/Temporary/Form">Permanent</Link>,
       },
       {
         key: 2,
-        label: <a href="#">Temporary</a>,
+        label: <Link to="/Temporary/Form">Temporary</Link>,
       },
     ]}
   />
@@ -62,15 +63,15 @@ const menu = (
         key: 1,
         label: (
           <Dropdown overlay={hangarPhotoIdMenu} align={{ offset: [160, -36] }}>
-            <a onClick={(e) => e.preventDefault()}>
-              <Space className={`${styles.category}`}>
+            <Link to="/">
+              <Space className={styles.category}>
                 Hangar Photo ID
                 <Icon
                   iconName="CaretRightSolid8"
-                  className={`${styles.iconRight}`}
+                  className={styles.iconRight}
                 />
               </Space>
-            </a>
+            </Link>
           </Dropdown>
         ),
       },
@@ -78,15 +79,15 @@ const menu = (
         key: 2,
         label: (
           <Dropdown overlay={dailyHangarMenu} align={{ offset: [160, -36] }}>
-            <a onClick={(e) => e.preventDefault()}>
-              <Space className={`${styles.category}`}>
+            <Link to="/">
+              <Space className={styles.category}>
                 Daily Hangar
                 <Icon
                   iconName="CaretRightSolid8"
-                  className={`${styles.iconRight}`}
+                  className={styles.iconRight}
                 />
               </Space>
-            </a>
+            </Link>
           </Dropdown>
         ),
       },
@@ -94,15 +95,15 @@ const menu = (
         key: 3,
         label: (
           <Dropdown overlay={cameraMenu} align={{ offset: [160, -46] }}>
-            <a onClick={(e) => e.preventDefault()}>
-              <Space className={`${styles.category}`}>
+            <Link to="/">
+              <Space className={styles.category}>
                 Camera
                 <Icon
                   iconName="CaretRightSolid8"
-                  className={`${styles.iconRight}`}
+                  className={styles.iconRight}
                 />
               </Space>
-            </a>
+            </Link>
           </Dropdown>
         ),
       },
@@ -110,20 +111,18 @@ const menu = (
   />
 );
 
-const Header: React.FunctionComponent<IHeaderProps> = () => {
+const Header: React.FC<IHeaderProps> = () => {
   return (
-    <div className={`${styles.header}`}>
+    <div className={styles.header}>
       <Dropdown overlay={menu} className={styles.headerBtn}>
-        <a onClick={(e) => e.preventDefault()}>
-          <Space className={styles.headerText}>
-            <Icon iconName="PageAdd" className={`${styles.icon}`} />
-            Create new Pass
-            <Icon
-              iconName="CaretDownSolid8"
-              className={`${styles.iconRight}`}
-            />
-          </Space>
-        </a>
+        <Space className={styles.headerText}>
+          <Icon iconName="PageAdd" className={styles.icon} />
+          Create new Pass
+          <Icon
+            iconName="CaretDownSolid8"
+            className={styles.iconRight}
+          />
+        </Space>
       </Dropdown>
     </div>
   );

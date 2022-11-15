@@ -3,6 +3,7 @@ import { spfi, SPFI, SPFx } from "@pnp/sp";
 import "@pnp/sp/files";
 import "@pnp/sp/folders";
 import "@pnp/sp/webs";
+// import { IFileAddResult } from "@pnp/sp/files";
 
 export default class FileServices {
   private sp: SPFI;
@@ -12,7 +13,7 @@ export default class FileServices {
 
   async create(folderName: string, file: File): Promise<void> {
     // let input = <HTMLInputElement>document.getElementById("thefileinput");
-    const fileNamePath = encodeURI(file.name);
+    const fileNamePath = encodeURI(file.lastModified.toString() + file.name);
     // let result: IFileAddResult;
     if (file.size <= 10485760) {
       await this.sp.web
@@ -33,8 +34,11 @@ export default class FileServices {
     }
   }
 
-  // async getImage(folder: string, id): Promise<void> {
-
-  // }
+  public async createfile(folderUrl: string, file: any) {
+    const fileNamePath = encodeURI(file.name);
+    await this.sp.web
+      .getFolderByServerRelativePath(folderUrl)
+      .files.addUsingPath(fileNamePath, file);
+  }
 
 }

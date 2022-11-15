@@ -19,7 +19,7 @@ interface DataType {
   status: string;
 }
 
-const Body: React.FunctionComponent<IBodyProps> = () => {
+const Body: React.FC<IBodyProps> = () => {
   const [sortedInfo, setSortedInfo] = React.useState<SorterResult<DataType>>(
     {}
   );
@@ -132,8 +132,8 @@ const Body: React.FunctionComponent<IBodyProps> = () => {
   ];
 
   return (
-    <div className={`${styles.body}`}>
-      <div className={`${styles.title}`}>
+    <div className={styles.body}>
+      <div className={styles.title}>
         <h6>My Pass</h6>
         <SearchBox placeholder="Find an item" underlined={true} />
       </div>

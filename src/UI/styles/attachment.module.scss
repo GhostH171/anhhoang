@@ -1,0 +1,13 @@
+.attachment {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  
+    &_delete {
+      border: none;
+      background-color: transparent;
+      color: #d83b01;
+      cursor: pointer;
+      padding: 4px;
+    }
+  }

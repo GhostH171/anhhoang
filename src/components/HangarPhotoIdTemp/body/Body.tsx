@@ -10,8 +10,9 @@ import type {
   SorterResult,
 } from "antd/es/table/interface";
 import "antd/dist/antd.css";
-import { AadHttpClient, HttpClientResponse } from "@microsoft/sp-http";
-import { useEffect } from "react";
+// import { AadHttpClient, HttpClientResponse } from "@microsoft/sp-http";
+import { useEffect, useState } from "react";
+import { getInformationList } from '../../../api/index';
 
 interface DataType {
   passNumber: string;
@@ -25,23 +26,35 @@ const Body: React.FunctionComponent<IBodyProps> = () => {
   const [sortedInfo, setSortedInfo] = React.useState<SorterResult<DataType>>(
     {}
   );
+  const [dataTable, setDataTable] = useState();
+  console.log("🚀 ~ file: Body.tsx ~ line 30 ~ dataTable", dataTable)
+ 
 
   // const [filteredInfo, setFilteredInfo] = React.useState<
   //   Record<string, FilterValue | null>
   // >({});
 
   const handleChange: TableProps<DataType>["onChange"] = (
-    pagination,
-    filters,
+    // pagination,
+    // filters,
     sorter
   ) => {
-    console.log("Various parameters", pagination, filters, sorter);
     // setFilteredInfo(filters);
     setSortedInfo(sorter as SorterResult<DataType>);
   };
 
   useEffect(() => {
-    getPhotoId();
+    const fetchData = async () => {
+      try {
+        const data = await getInformationList();
+       
+        setDataTable(data)
+      } catch(err) {
+        console.log(err);
+      }
+    };
+    
+    fetchData();
   }, []);
 
   const data: DataType[] = [
@@ -74,34 +87,36 @@ const Body: React.FunctionComponent<IBodyProps> = () => {
       status: "Approved",
     },
   ];
-  const functionUrl = "api://358331ba-feca-4cbf-8e8e-f3bb3400661d";
+
+  // const functionUrl = "api://358331ba-feca-4cbf-8e8e-f3bb3400661d";
   
-  function getPhotoId(): void {
-    try {
-      this.props.context.aadHttpClientFactory
-        .getClient(functionUrl)
-        .then((client: AadHttpClient): void => {
-          // eslint-disable-next-line @typescript-eslint/no-floating-promises
-          client
-            .get(
-              `https://siaec-hangarpass-uat.azurewebsites.net/api/photoid?code=cbTEFkeZGjkOwTFfXeaJtxqUFdT2GWcggTx0xuSvpZGJAzFuTEuwng==`,
-              AadHttpClient.configurations.v1,
-              {}
-            )
-            .then((response: HttpClientResponse): Promise<any> => {
-              return response.json();
-            })
-            .then((result: any) => {
-              console.log(result);
-            });
-        });
-    } catch (error) {
-      console.log(
-        "Error occure while retrieve the mysubmissions. Error : " + error
-      );
-      //this.setState({State_FetchingResults:false});
-    }
-  }
+  // function getPhotoId(): void {
+  //   try {
+  //     this.props.context.aadHttpClientFactory
+  //       .getClient(functionUrl)
+  //       .then((client: AadHttpClient): void => {
+  //         // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  //         client
+  //           .get(
+  //             `https://siaec-hangarpass-uat.azurewebsites.net/api/photoid?code=cbTEFkeZGjkOwTFfXeaJtxqUFdT2GWcggTx0xuSvpZGJAzFuTEuwng==`,
+  //             AadHttpClient.configurations.v1,
+  //             {}
+  //           )
+  //           .then((response: HttpClientResponse): Promise<any> => {
+  //             return response.json();
+  //           })
+  //           .then((result: any) => {
+  //             console.log(result);
+  //           });
+  //       });
+  //   } catch (error) {
+  //     console.log(
+  //       "Error occure while retrieve the mysubmissions. Error : " + error
+  //     );
+  //     //this.setState({State_FetchingResults:false});
+  //   }
+  // }
+
   const columns: ColumnsType<DataType> = [
     {
       title: "Pass Number",
@@ -157,16 +172,16 @@ const Body: React.FunctionComponent<IBodyProps> = () => {
     {
       title: "Status",
       dataIndex: "status",
-      filters: [
-        {
-          text: "Approved",
-          value: "approved",
-        },
-        {
-          text: "Rejected",
-          value: "rejected",
-        },
-      ],
+      // filters: [
+      //   {
+      //     text: "Approved",
+      //     value: "approved",
+      //   },
+      //   {
+      //     text: "Rejected",
+      //     value: "rejected",
+      //   },
+      // ],
       key: "status",
       sorter: (a, b) => a.status.localeCompare(b.status),
       sortOrder: sortedInfo.columnKey === "status" ? sortedInfo.order : null,

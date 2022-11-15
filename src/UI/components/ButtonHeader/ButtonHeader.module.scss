@@ -2,6 +2,10 @@
 @import "../../../UI/styles/container.module.scss";
 @import "../../../UI/styles/include.module.scss";
 
+.button {
+  margin-left: 8px;
+}
+
 .icon {
   margin-right: 10px;
   font-size: 18px;
@@ -16,6 +20,11 @@
 }
 
 .text {
-  text-decoration: none !important;
   font-family: "Proxima Nova", Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
+.link {
+  &:hover {
+    text-decoration: none;
+  }
 }

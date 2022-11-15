@@ -10,18 +10,18 @@ const UseRoutes = (): JSX.Element =>
   useRoutes([
     {
       path: "/",
-      //   element: <Home />,
+      element: <MyPass />,
     },
     {
       path: "/MyPass",
       element: <MyPass />,
     },
     {
-      path: "/HangarPass/Temporary",
+      path: "/Temporary",
       element: <HangarPhotoIdTemp />,
     },
     {
-      path: "/HangarPass/Permanent",
+      path: "/Permanent",
       element: <HangarPhotoIdPerm />,
     },
     {
@@ -29,7 +29,7 @@ const UseRoutes = (): JSX.Element =>
       element: <HangarPassPhotoId />,
     },
     {
-      path: "/HangarPass/Temporary/Form",
+      path: "/Temporary/Form",
       element: <HangarPhotoIdTempForm />,
     },
   ]);

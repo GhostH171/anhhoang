@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import styles from "./HangarPhotoIdTempFormBody.module.scss";
 import {
   UploadProps, RadioChangeEvent, Divider, Space, InputRef,
@@ -9,12 +9,21 @@ import {
 } from "antd";
 import { PlusOutlined } from '@ant-design/icons';
 import { Icon } from "office-ui-fabric-react";
+// import { Label } from "@fluentui/react";
 import TextArea from "antd/lib/input/TextArea";
 import { UploadOutlined } from "@ant-design/icons";
+import "antd/dist/antd.css";
+import CustomContext from "../../../context/UseContext";
+import { PeoplePicker } from "@pnp/spfx-controls-react/lib/PeoplePicker";
+import GroupServices from "../../../services/GroupServices";
+import { GROUP_NAME, LIST_NAME } from "../../../helpers/const";
+// import FileServices from "../../../services/FileDemoServices";
+// import { UploadChangeParam, UploadFile } from "antd/lib/upload";
+// import { FilePicker } from "@pnp/spfx-controls-react/lib/FilePicker";
+// import ListServices from "../../../services/ListServices";
 
 import Nationality from '../../../assets/nationality.json';
 import Country from '../../../assets/country.json';
-import Approver from '../../../assets/approver.json';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -46,6 +55,7 @@ const formItemLayout = {
     sm: { span: 16 },
   },
 };
+
 const props: UploadProps = {
   name: "file",
   action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
@@ -77,18 +87,38 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
   onFinish,
   form
 }) => {
+  const { context } = useContext(CustomContext);
+  const groupServices = new GroupServices(context);
   const [cardType, setCardType] = useState("staff");
   const [gender, setGender] = useState("male");
   const [foreigner, setForeigner] = useState("none");
+  const [BMDTitle, setBMDTitle] = useState([]);
+  console.log("🚀 ~ file: HangarPhotoIdTempFormBody.tsx ~ line 97 ~ BMDTitle", BMDTitle)
 
   const [items, setItems] = useState(['Chinese', 'Malay', 'Indian', 'Eurasian']);
   const [name, setName] = useState('');
   const inputRef = useRef<InputRef>(null);
 
+  //Fetch Group
+  const _fetchGroupBMD = () => {
+    groupServices.getGroupUsers(GROUP_NAME.hmd).then((res) => {
+      const BMDName = res.map((BMDTitle) => {
+        return BMDTitle.Title;
+      });
+      setBMDTitle(BMDName);
+    });
+  };
+  
+    useEffect(() => {
+      _fetchGroupBMD();
+    }, []);
+
+   // add item in race
   const onNameChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setName(event.target.value);
   };
 
+  // add item in race
   const addItem = (e: React.MouseEvent<HTMLAnchorElement>): void => {
     e.preventDefault();
     setItems([...items, name || `New item ${index++}`]);
@@ -247,7 +277,7 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
             >
               <Form.Item
                 name="nricType"
-                rules={[{ required: false }]}
+                rules={[{ required: true,  message: "Please select your NRIC Type!", }]}
                 className={`${styles.formItem2}`}
               >
                 <Select defaultValue="Select NRIC">
@@ -257,7 +287,7 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
               </Form.Item>
               <Form.Item
                 name="nricNumber"
-                rules={[{ required: false }]}
+                rules={[{ required: true, message: "Please select your NRIC Number!", }]}
                 className={`${styles.formItemForNricNumber}`}
               >
                 <Input placeholder="NRIC Number" />
@@ -545,23 +575,24 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({
                   },
                 ]}
               >
-                <Input
+                <PeoplePicker context={context} ensureUser groupId={4161} />
+                {/* <Input
                   placeholder="Enter a name or email..."
                   className={`${styles.sponsorInput}`}
-                />
+                /> */}
               </Form.Item>
               <Form.Item
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
-                label="HMD Approver"
+                label="BMD Approver"
                 name="approver"
                 rules={[
-                  { required: true, message: "Please select HMD approver!" },
+                  { required: true, message: "Please select BMD approver!" },
                 ]}
               >
                 <Select>
                   {
-                    Approver.map((item: string, index: number) => <Option key={index} value={item}>{item}</Option> )
+                    BMDTitle.map((item: string, index: number) => <Option key={index} value={item}>{item}</Option> )
                   }
                 </Select>
               </Form.Item>

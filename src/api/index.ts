@@ -39,4 +39,27 @@ const submitInformation = async (data) => {
     }
 };
 
-export { getInformationList, submitInformation };
+const editInformation = async (id, data) => {
+    try {
+        const detail = { 
+            information: {...data, id }
+        }
+
+        const params = {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': "*"
+            },
+            body:  JSON.stringify(detail)
+        }
+
+        const response = await fetch(`${url}information`, params );
+
+        return response;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export { getInformationList, submitInformation, editInformation };

@@ -11,7 +11,7 @@ export default class HangarPhotoIdTemp extends React.Component<
   public render(): JSX.Element {
     return (
       <section className={`${styles.container}`}>
-        <ButtonHeader title="Create New Temporary Pass" link="#" />
+        <ButtonHeader title="Create New Temporary Pass" link="/Temporary/Form" />
         <Body />
         <Footer />
       </section>

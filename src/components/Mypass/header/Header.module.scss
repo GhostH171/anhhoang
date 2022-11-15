@@ -20,9 +20,16 @@
   text-decoration: none;
 }
 .icon {
-  margin: 0 10px;
+  margin-left: 15px;
   font-size: 18px;
 }
+
+.link {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 .iconRight {
   font-size: 8px;
   margin-top: 2px;
