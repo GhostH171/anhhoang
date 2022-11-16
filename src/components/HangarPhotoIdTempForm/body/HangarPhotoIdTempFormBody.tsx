@@ -25,17 +25,13 @@ import { PlusOutlined } from "@ant-design/icons";
 import { Icon } from "office-ui-fabric-react";
 import { Label } from "@fluentui/react";
 import TextArea from "antd/lib/input/TextArea";
-import { UploadOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import CustomContext from "../../../context/UseContext";
 import { PeoplePicker } from "@pnp/spfx-controls-react/lib/PeoplePicker";
 import GroupServices from "../../../services/GroupServices";
 import { GROUP_NAME } from "../../../helpers/const";
 import FileServices from "../../../services/FileDemoServices";
-import type { RcFile, UploadFile } from "antd/es/upload/interface";
 import { FilePicker } from "@pnp/spfx-controls-react/lib/FilePicker";
-import type { UploadChangeParam } from "antd/es/upload";
-
 import Nationality from "../../../assets/nationality.json";
 import Country from "../../../assets/country.json";
 
@@ -83,7 +79,6 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({ onFinish, form }) => {
   const [cardType, setCardType] = useState("staff");
   const [gender, setGender] = useState("male");
   const [foreigner, setForeigner] = useState("none");
-  const [foreignNa, setForeignNa] = useState("none");
   const [BMDTitle, setBMDTitle] = useState([]);
   const [attachmentsState, setattachmentsState] = useState<File[]>([]);
 
@@ -100,9 +95,9 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({ onFinish, form }) => {
 
   const _handleSubmit = () => {
     attachmentsState.forEach((file) => {
+      console.log("Attachment", file);
       fileServices.create(
-        // Error here, không upload được lên đường dẫn này
-        "sites%2Fuat%2Fhangar_pass%2FAll%20Attachments%2FTemporaryNew",
+        "/sites/uat/hangar_pass/All Attachments/TemporaryNew",
         file
       );
     });
@@ -110,12 +105,6 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({ onFinish, form }) => {
   useEffect(() => {
     _handleSubmit();
   }, [attachmentsState]);
-
-  const _getFileUrl = (info: UploadChangeParam<UploadFile>) => {
-    fileServices.getFile(
-      "/sites/uat/hangar_pass/Images1/HangarPass/TemporaryNew/1650044414254product_1632992196.jpg"
-    );
-  };
 
   //Fetch Group
   const _fetchGroupBMD = () => {
@@ -657,7 +646,7 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({ onFinish, form }) => {
           >
             <Form.Item className={`${styles.uploadFile}`}>
               <Text className={`${styles.uploadFileText}`}>
-                Use the right section to add Attachments
+                Use the bellow section to add Attachments
               </Text>
               <FilePicker
                 required
@@ -678,22 +667,23 @@ const HangarPhotoIdTempFormBody: React.FC<IProps> = ({ onFinish, form }) => {
                   setattachmentsState(attachments);
                 }}
               />
+              {(attachmentsState || []).map((file, fIndex) => (
+                <div key={fIndex} className={`${styles.attachment}`}>
+                  <Label>{file.name}</Label>
+                  <button
+                    type={"button"}
+                    className={`${styles.attachment_delete}`}
+                    onClick={() => {
+                      console.log(attachmentsState);
+                      attachmentsState.splice(fIndex, 1);
+                      setattachmentsState([]);
+                    }}
+                  >
+                    <Icon iconName={"Cancel"} />
+                  </button>
+                </div>
+              ))}
             </Form.Item>
-            {(attachmentsState || []).map((file, fIndex) => (
-              <div key={fIndex} className={`${styles.attachment}`}>
-                <Label>{file.name}</Label>
-                <button
-                  type={"button"}
-                  className={`${styles.attachment_delete}`}
-                  onClick={() => {
-                    console.log(attachmentsState);
-                    attachmentsState.splice(fIndex, 1);
-                  }}
-                >
-                  <Icon iconName={"Cancel"} />
-                </button>
-              </div>
-            ))}
           </Panel>
 
           <Panel

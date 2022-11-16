@@ -1,17 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { message, Upload } from "antd";
+import { message, Typography, Upload } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 import * as React from "react";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import CustomContext from "../../../context/UseContext";
 import FileServices from "../../../services/FileDemoServices";
 import styles from "./HangarPhotoIdUploadImage.module.scss";
 import { IHangarPhotoIdUploadImageProps } from "./IHangarPhotoIdUploadImageProps";
 
+const { Text } = Typography;
 
-const getBase64 = (img: RcFile, callback: (url: string) => void): void => {
+const getBase64 = (img: RcFile, callback: (url: string) => void) => {
   const reader = new FileReader();
   reader.addEventListener("load", () => callback(reader.result as string));
   reader.readAsDataURL(img);
@@ -23,11 +23,9 @@ const HangarPhotoIdUploadImage: React.FC<IHangarPhotoIdUploadImageProps> = (
   const { context } = useContext(CustomContext);
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<any>();
-  console.log("🚀 ~ file: HangarPhotoIdUploadImage.tsx ~ line 26 ~ imageUrl", imageUrl)
+  const [imsgeDisplay, setImageDisplay] = useState("");
   const fileServices = new FileServices(context);
-  console.log('file service', fileServices)
-
-  const uploadImage = (imageUrl: File): void => {
+  const uploadImage = (imageUrl: File) => {
     if (props.formType === "Temporary") {
       fileServices.create(
         "/sites/uat/hangar_pass/Images1/HangarPass/TemporaryNew",
@@ -40,7 +38,6 @@ const HangarPhotoIdUploadImage: React.FC<IHangarPhotoIdUploadImageProps> = (
       );
     }
   };
-
   const handleChange: UploadProps["onChange"] = (
     info: UploadChangeParam<UploadFile>
   ) => {
@@ -59,7 +56,9 @@ const HangarPhotoIdUploadImage: React.FC<IHangarPhotoIdUploadImageProps> = (
     }
   };
 
-  const beforeUpload = (file: RcFile): void => {
+  const beforeUpload = (file: RcFile) => {
+    console.log(file);
+
     const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
     if (!isJpgOrPng) {
       message.error("You can only upload JPG/PNG file!");
@@ -79,7 +78,20 @@ const HangarPhotoIdUploadImage: React.FC<IHangarPhotoIdUploadImageProps> = (
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
   );
- 
+
+  const _getImage = async () => {
+    const getFile = await fileServices.getFile(
+      `/sites/uat/hangar_pass/Images1/HangarPass/TemporaryNew/1665109821924download.png`
+    );
+    getFile.getItem().then((res) => {
+      console.log("res", res);
+    });
+    console.log("getFile.getItem()", await getFile.getItem());
+  };
+  useEffect(() => {
+    console.log("re-render");
+    _getImage();
+  }, []);
 
   return (
     <div className={`${styles.imageWrapper}`}>
